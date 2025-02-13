@@ -1,10 +1,10 @@
-import { PrivateControllerApi } from "./generated/oauth-api"
+import { AuthControllerApi } from "./generated/oauth-api"
+import { user } from "./functions/user.svelte"
 
-const privateApi = new PrivateControllerApi()
+const authApi = new AuthControllerApi()
 
 export const requireAuth = async (): Promise<boolean> => {
-    return privateApi.checkAuth({ credentials: "include" }).then((res) => {
-        console.log("res: " + res)
-        return res
+    return authApi.getUser({ credentials: "include" }).then((res) => {
+        return res.id == user.current?.id
     })
 }

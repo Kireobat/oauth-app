@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { user } from "$lib/functions/user.svelte";
     import { AuthControllerApi, type UserDto } from "$lib/generated/oauth-api";
     import {
         Avatar,
@@ -15,10 +16,9 @@
     import { onMount } from "svelte";
 
     const authApi = new AuthControllerApi();
-    let user: UserDto | undefined = $state();
 
     const getUser = async () => {
-        user = await authApi.getUser({ credentials: "include" });
+        user.current = await authApi.getUser({ credentials: "include" });
     };
 
     onMount(() => {
@@ -45,11 +45,11 @@
             <DarkMode />
         </NavLi>
         <NavLi>
-            <Avatar src={user?.avatarUrl} />
+            <Avatar src={user.current?.avatarUrl} />
         </NavLi>
         <Dropdown>
-            {#if user?.username}
-                <DropdownItem href={"/u/" + user.username}
+            {#if user.current?.username}
+                <DropdownItem href={"/u/" + user.current.username}
                     >Your Profile</DropdownItem
                 >
                 <DropdownItem href="/dashboard/settings">Settings</DropdownItem>

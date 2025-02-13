@@ -26,6 +26,10 @@ export interface AddReactionRequest {
     createReactionDto: CreateReactionDto;
 }
 
+export interface RemoveReactionRequest {
+    reactionId: number;
+}
+
 /**
  * 
  */
@@ -67,6 +71,45 @@ export class ReactionControllerApi extends runtime.BaseAPI {
      */
     async addReaction(requestParameters: AddReactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.addReactionRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     */
+    async removeReactionRaw(requestParameters: RemoveReactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['reactionId'] == null) {
+            throw new runtime.RequiredError(
+                'reactionId',
+                'Required parameter "reactionId" was null or undefined when calling removeReaction().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['reactionId'] != null) {
+            queryParameters['reactionId'] = requestParameters['reactionId'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("github", []);
+        }
+
+        const response = await this.request({
+            path: `/api/v1/reaction/remove`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async removeReaction(requestParameters: RemoveReactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.removeReactionRaw(requestParameters, initOverrides);
     }
 
 }

@@ -1,23 +1,45 @@
 <script lang="ts">
-    import type { BlogDto } from "$lib/generated/oauth-api";
+    import {
+        BlogControllerApi,
+        ReactionControllerApi,
+        type BlogDto,
+        type ReactionDto,
+    } from "$lib/generated/oauth-api";
     import { Heading, P } from "flowbite-svelte";
     import EmojiPicker from "../EmojiPicker/EmojiPicker.svelte";
+    import Reactions from "../Reactions/Reactions.svelte";
 
     interface BlogCardProps {
         blog: BlogDto;
     }
 
     let props: BlogCardProps = $props();
-    let emoji = $state();
-
-    $inspect(emoji);
+    let emoji: string | undefined = $state();
+    let reactions: ReactionDto[] | undefined = $state(props.blog.reactions);
+    const reactionApi = new ReactionControllerApi();
+    const blogApi = new BlogControllerApi();
 
     const limitedBody = props.blog.body?.substring(0, 50);
-</script>
 
-<div>
-    <h1>Selected Emoji: {emoji}</h1>
-</div>
+    $effect(() => {
+        const updateReactions = async () => {
+            if (emoji === "" || emoji === undefined) return;
+            await reactionApi.addReaction(
+                {
+                    createReactionDto: {
+                        blogId: props.blog.id,
+                        reaction: emoji,
+                    },
+                },
+                { credentials: "include" },
+            );
+            reactions = (
+                await blogApi.getBlogById({ id: props.blog.id as number })
+            ).reactions;
+        };
+        updateReactions();
+    });
+</script>
 
 <div
     class="dark:bg-slate-600 bg-gray-100 sm:rounded-md w-full sm:w-min flex justify-center"
@@ -44,7 +66,9 @@
             </div>
         </a>
         <div class="flex justify-end mx-4 gap-3">
-            <P>👍3 ❤5 😍2</P>
+            {#if reactions != undefined}
+                <Reactions {reactions} />
+            {/if}
             <EmojiPicker bind:emoji />
         </div>
     </div>

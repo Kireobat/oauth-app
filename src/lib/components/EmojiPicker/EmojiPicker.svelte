@@ -1,8 +1,8 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-
     import { clickOutside } from "$lib/functions/clickOutside";
-    import { Button } from "flowbite-svelte";
+    import { Button, P } from "flowbite-svelte";
+    import { FaceLaughOutline } from "flowbite-svelte-icons";
     import { onDestroy, onMount } from "svelte";
 
     let { emoji = $bindable() } = $props();
@@ -42,7 +42,10 @@
     });
 </script>
 
-<Button class="editor-btn relative" on:click={toggleEmojiPicker}>React</Button>
+<Button class="editor-btn relative w-10 h-8" on:click={toggleEmojiPicker}
+    ><FaceLaughOutline />
+    <span class="absolute translate-x-[0.6rem] -translate-y-[0.6rem]">+</span>
+</Button>
 
 {#if emojiPickerVisible}
     <div

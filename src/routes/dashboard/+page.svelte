@@ -3,25 +3,20 @@
         PrivateControllerApi,
         PublicControllerApi,
         type CreateReviewDto,
-        type CreateReviewRequest,
-        type GithubUserDto,
         type ReviewEntity,
+        type UserDto,
     } from "$lib/generated/oauth-api";
     import { Button, Heading, Input, Skeleton } from "flowbite-svelte";
     import { onMount } from "svelte";
+    import { user } from "$lib/functions/user.svelte";
 
     const privateApi = new PrivateControllerApi();
     const publicApi = new PublicControllerApi();
-    let user: GithubUserDto | undefined = $state();
     let reviews: ReviewEntity[] = $state([]);
 
     let title = $state("");
     let description = $state("");
     let rating = $state(0);
-
-    const getUser = async () => {
-        user = await privateApi.getUser({ credentials: "include" });
-    };
 
     const createReview = async () => {
         const createReviewDto: CreateReviewDto = {
@@ -43,7 +38,6 @@
     };
 
     onMount(() => {
-        getUser();
         getReviews();
     });
 </script>
@@ -53,7 +47,7 @@
     class="mb-4"
     customSize="text-4xl font-bold  md:text-5xl lg:text-6xl"
 >
-    Welcome, {user?.username}
+    Welcome, {user.current?.username}
 </Heading>
 
 <div>
