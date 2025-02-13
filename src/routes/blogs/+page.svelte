@@ -1,10 +1,12 @@
 <script lang="ts">
     import BlogCard from "$lib/components/BlogCard/BlogCard.svelte";
+    import BlogModal from "$lib/components/BlogModal/BlogModal.svelte";
     import {
         BlogControllerApi,
         type BlogDto,
         type OAuthApiPageDtoBlogDto,
     } from "$lib/generated/oauth-api";
+    import { P } from "flowbite-svelte";
     import { onMount } from "svelte";
 
     const blogControllerApi = new BlogControllerApi();
@@ -20,6 +22,25 @@
     });
 </script>
 
+<div
+    class="flex w-full justify-evenly fixed bottom-0 bg-slate-100 py-4 sm:bg-transparent sm:static z-50"
+>
+    <div class="order-1 sm:order-1">
+        <P>text1</P>
+    </div>
+    <div class="order-2 sm:order-2">
+        <P>text1</P>
+    </div>
+    <div class="order-4 sm:order-3">
+        <P>text1</P>
+    </div>
+    <div class="order-5 sm:order-4">
+        <P>text1</P>
+    </div>
+    <div class="order-3 sm:order-5">
+        <BlogModal />
+    </div>
+</div>
 {#if pagedBlogResponse != undefined && pagedBlogResponse.page != undefined}
     <div class="sm:flex sm:justify-center sm:w-full">
         <div
