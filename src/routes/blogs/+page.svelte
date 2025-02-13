@@ -26,19 +26,19 @@
     class="flex w-full justify-evenly fixed bottom-0 bg-slate-100 py-4 sm:bg-transparent sm:static z-50"
 >
     <div class="order-1 sm:order-1">
-        <P>text1</P>
+        <P>Home</P>
     </div>
     <div class="order-2 sm:order-2">
-        <P>text1</P>
-    </div>
-    <div class="order-4 sm:order-3">
-        <P>text1</P>
-    </div>
-    <div class="order-5 sm:order-4">
-        <P>text1</P>
+        <P>Communities</P>
     </div>
     <div class="order-3 sm:order-5">
         <BlogModal />
+    </div>
+    <div class="order-4 sm:order-3">
+        <P>Chat</P>
+    </div>
+    <div class="order-5 sm:order-4">
+        <P>Inbox</P>
     </div>
 </div>
 {#if pagedBlogResponse != undefined && pagedBlogResponse.page != undefined}
