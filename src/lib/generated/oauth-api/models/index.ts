@@ -6,6 +6,7 @@ export * from './CreateBlogDto';
 export * from './CreateReactionDto';
 export * from './CreateReviewDto';
 export * from './OAuthApiPageDtoBlogDto';
+export * from './OAuthResponseDto';
 export * from './ReactionDto';
 export * from './ReviewEntity';
 export * from './UserDto';

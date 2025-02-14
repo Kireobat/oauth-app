@@ -11,6 +11,7 @@ models/CreateBlogDto.ts
 models/CreateReactionDto.ts
 models/CreateReviewDto.ts
 models/OAuthApiPageDtoBlogDto.ts
+models/OAuthResponseDto.ts
 models/ReactionDto.ts
 models/ReviewEntity.ts
 models/UserDto.ts

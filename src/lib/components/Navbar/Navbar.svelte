@@ -26,7 +26,7 @@
     });
 </script>
 
-<Navbar>
+<Navbar class="border-b-2 sm:border-b-0 border-slate-300 h-16 sm:h-20">
     <NavBrand href="/">
         <img src="/logo.png" class="me-3 h-8 sm:h-10" alt="Flowbite Logo" />
         <span
@@ -55,7 +55,9 @@
                 <DropdownItem href="/dashboard/settings">Settings</DropdownItem>
                 <DropdownItem href="/logout">Sign out</DropdownItem>
             {:else}
-                <DropdownItem href="/login">Sign in</DropdownItem>
+                <DropdownItem href="/login?ref={window.location.href}"
+                    >Sign in</DropdownItem
+                >
             {/if}
         </Dropdown>
     </NavUl>

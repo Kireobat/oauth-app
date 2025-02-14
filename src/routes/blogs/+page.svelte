@@ -1,54 +1,113 @@
 <script lang="ts">
     import BlogCard from "$lib/components/BlogCard/BlogCard.svelte";
-    import BlogModal from "$lib/components/BlogModal/BlogModal.svelte";
     import {
         BlogControllerApi,
         type BlogDto,
         type OAuthApiPageDtoBlogDto,
     } from "$lib/generated/oauth-api";
-    import { P } from "flowbite-svelte";
+    import { Spinner } from "flowbite-svelte";
     import { onMount } from "svelte";
+    import { infiniteScroll } from "$lib/functions/infiniteScroll";
+    import { windowWidth } from "$lib/functions/window.svelte";
 
     const blogControllerApi = new BlogControllerApi();
 
     let pagedBlogResponse: OAuthApiPageDtoBlogDto | undefined = $state();
+    let loadedBlogs: BlogDto[] = $state([]);
+    let pageNumber: number = $state(0);
+    let pageSize: number = $state(0);
+    let loading: boolean = $state(false);
+    let elementRef: HTMLElement | null = $state(null);
+
+    const calculatePageSize = () => {
+        switch (true) {
+            // smaller than sm
+            case windowWidth.current < 640:
+                return 1;
+            // sm
+            case windowWidth.current < 768:
+                return 2;
+            // md
+            case windowWidth.current < 1024:
+                return 3;
+            // lg+
+            default:
+                return 4;
+        }
+    };
+
+    const getBlogs = async () => {
+        if (
+            pagedBlogResponse?.totalPages &&
+            pageNumber >= pagedBlogResponse.totalPages
+        ) {
+            return;
+        }
+        try {
+            loading = true;
+
+            pagedBlogResponse = await blogControllerApi.getBlogs({
+                page: pageNumber,
+                size: pageSize,
+                sort: ["id,ASC"],
+            });
+
+            if (pagedBlogResponse.page === undefined) return;
+
+            loadedBlogs = loadedBlogs.concat(
+                pagedBlogResponse.page.filter((filterEl) => {
+                    return !loadedBlogs.some((el) => el.id === filterEl.id);
+                }),
+            );
+
+            if (
+                pagedBlogResponse.totalPages &&
+                pageNumber < pagedBlogResponse.totalPages
+            ) {
+                pageNumber = pageNumber + 1;
+            }
+
+            loading = false;
+        } catch (error) {}
+    };
 
     onMount(async () => {
-        pagedBlogResponse = await blogControllerApi.getBlogs({
-            page: 0,
-            size: 100,
-            sort: ["id,ASC"],
-        });
+        pageSize = calculatePageSize();
+        await getBlogs();
+    });
+
+    $effect(() => {
+        if (elementRef) {
+            infiniteScroll(getBlogs, elementRef);
+        }
+    });
+
+    $effect(() => {
+        if (windowWidth.current > -1) {
+            pageSize = calculatePageSize();
+            pageNumber = 0;
+        }
     });
 </script>
 
-<div
-    class="flex w-full justify-evenly fixed bottom-0 bg-slate-100 py-4 sm:bg-transparent sm:static z-50"
->
-    <div class="order-1 sm:order-1">
-        <P>Home</P>
-    </div>
-    <div class="order-2 sm:order-2">
-        <P>Communities</P>
-    </div>
-    <div class="order-3 sm:order-5">
-        <BlogModal />
-    </div>
-    <div class="order-4 sm:order-3">
-        <P>Chat</P>
-    </div>
-    <div class="order-5 sm:order-4">
-        <P>Inbox</P>
-    </div>
-</div>
-{#if pagedBlogResponse != undefined && pagedBlogResponse.page != undefined}
-    <div class="sm:flex sm:justify-center sm:w-full">
-        <div
-            class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 bg-gray-100 dark:bg-slate-600 sm:bg-transparent dark:sm:bg-transparent"
-        >
-            {#each pagedBlogResponse.page as blog}
-                <BlogCard {blog} />
-            {/each}
+{#if loadedBlogs.length > 0}
+    <div class="pb-24 sm:pb-4 sm:bg-transparent dark:sm:bg-transparent">
+        <div class="sm:flex sm:justify-center sm:w-full">
+            <div
+                class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+            >
+                {#each loadedBlogs as blog}
+                    <BlogCard {blog} />
+                {/each}
+            </div>
         </div>
+        {#if loading}
+            <div class="w-full flex justify-center py-2">
+                <Spinner size="16" />
+            </div>
+        {/if}
+        {#if loading === false}
+            <li bind:this={elementRef}></li>
+        {/if}
     </div>
 {/if}

@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  OAuthResponseDto,
   UserDto,
 } from '../models/index';
 import {
+    OAuthResponseDtoFromJSON,
+    OAuthResponseDtoToJSON,
     UserDtoFromJSON,
     UserDtoToJSON,
 } from '../models/index';

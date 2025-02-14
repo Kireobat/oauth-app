@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  OAuthResponseDto,
   ReviewEntity,
 } from '../models/index';
 import {
+    OAuthResponseDtoFromJSON,
+    OAuthResponseDtoToJSON,
     ReviewEntityFromJSON,
     ReviewEntityToJSON,
 } from '../models/index';

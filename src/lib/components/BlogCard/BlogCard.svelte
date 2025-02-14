@@ -42,9 +42,9 @@
 </script>
 
 <div
-    class="dark:bg-slate-600 bg-gray-100 sm:rounded-md w-full sm:w-min flex justify-center"
+    class="sm:dark:bg-slate-600 sm:bg-gray-100 sm:rounded-md w-full sm:w-min flex justify-center sm:pb-2"
 >
-    <div>
+    <div class="flex flex-col justify-between">
         <a href="/blogs/{props.blog.id}" class="w-full">
             <div class="flex justify-center">
                 <img

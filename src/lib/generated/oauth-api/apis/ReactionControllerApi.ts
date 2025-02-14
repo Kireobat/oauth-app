@@ -16,10 +16,13 @@
 import * as runtime from '../runtime';
 import type {
   CreateReactionDto,
+  OAuthResponseDto,
 } from '../models/index';
 import {
     CreateReactionDtoFromJSON,
     CreateReactionDtoToJSON,
+    OAuthResponseDtoFromJSON,
+    OAuthResponseDtoToJSON,
 } from '../models/index';
 
 export interface AddReactionRequest {

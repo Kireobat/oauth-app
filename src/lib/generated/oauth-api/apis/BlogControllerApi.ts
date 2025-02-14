@@ -19,6 +19,7 @@ import type {
   BlogEntity,
   CreateBlogDto,
   OAuthApiPageDtoBlogDto,
+  OAuthResponseDto,
 } from '../models/index';
 import {
     BlogDtoFromJSON,
@@ -29,6 +30,8 @@ import {
     CreateBlogDtoToJSON,
     OAuthApiPageDtoBlogDtoFromJSON,
     OAuthApiPageDtoBlogDtoToJSON,
+    OAuthResponseDtoFromJSON,
+    OAuthResponseDtoToJSON,
 } from '../models/index';
 
 export interface CreateBlogRequest {

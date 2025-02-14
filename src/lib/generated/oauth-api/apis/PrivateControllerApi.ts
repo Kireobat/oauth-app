@@ -16,11 +16,14 @@
 import * as runtime from '../runtime';
 import type {
   CreateReviewDto,
+  OAuthResponseDto,
   ReviewEntity,
 } from '../models/index';
 import {
     CreateReviewDtoFromJSON,
     CreateReviewDtoToJSON,
+    OAuthResponseDtoFromJSON,
+    OAuthResponseDtoToJSON,
     ReviewEntityFromJSON,
     ReviewEntityToJSON,
 } from '../models/index';

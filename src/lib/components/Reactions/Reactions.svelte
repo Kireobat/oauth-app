@@ -5,8 +5,9 @@
         type ReactionDto,
         type UserDto,
     } from "$lib/generated/oauth-api";
-    import { P } from "flowbite-svelte";
+    import { Dropdown, DropdownItem, P } from "flowbite-svelte";
     import { user } from "$lib/functions/user.svelte";
+    import { DotsHorizontalOutline } from "flowbite-svelte-icons";
 
     interface ReactionsProps {
         reactions: ReactionDto[];
@@ -115,7 +116,6 @@
     };
 
     $effect(() => {
-        console.log("props.reactions changed");
         reactions = props.reactions;
     });
 
@@ -124,18 +124,51 @@
     });
 </script>
 
-{#each formatedReactions as formatedReaction}
-    <button
-        class="flex px-2 py-1 rounded-md {hasReacted(formatedReaction.users)
-            ? 'bg-primary-300'
-            : 'bg-slate-300'}"
-        onclick={() =>
-            handleReactionClick(
-                formatedReaction.reaction,
-                hasReacted(formatedReaction.users),
-            )}
-    >
-        <P>{formatedReaction.reaction}</P>
-        <P>{formatedReaction.users.length}</P>
-    </button>
+{#each formatedReactions as formatedReaction, index}
+    {#if index < 3}
+        <button
+            class="flex px-2 py-1 rounded-md {hasReacted(formatedReaction.users)
+                ? 'bg-primary-300'
+                : 'bg-slate-300'}"
+            onclick={() =>
+                handleReactionClick(
+                    formatedReaction.reaction,
+                    hasReacted(formatedReaction.users),
+                )}
+        >
+            <P>{formatedReaction.reaction}</P>
+            <P class="dark:text-black">{formatedReaction.users.length}</P>
+        </button>
+    {/if}
 {/each}
+
+{#if formatedReactions.length > 3}
+    <div class="flex flex-col justify-center">
+        <DotsHorizontalOutline class="dots-menu dark:text-white" />
+    </div>
+    <Dropdown>
+        {#each formatedReactions as formatedReaction, index}
+            {#if index > 2}
+                <DropdownItem>
+                    <button
+                        class="flex px-2 py-1 rounded-md {hasReacted(
+                            formatedReaction.users,
+                        )
+                            ? 'bg-primary-300'
+                            : 'bg-slate-300'}"
+                        onclick={() =>
+                            handleReactionClick(
+                                formatedReaction.reaction,
+                                hasReacted(formatedReaction.users),
+                            )}
+                    >
+                        <P>{formatedReaction.reaction}</P>
+                        <P class="dark:text-black"
+                            >{formatedReaction.users.length}</P
+                        >
+                    </button>
+                </DropdownItem>
+            {/if}
+        {/each}
+    </Dropdown>
+{/if}
