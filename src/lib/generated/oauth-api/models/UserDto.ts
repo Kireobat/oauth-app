@@ -55,6 +55,12 @@ export interface UserDto {
      * @memberof UserDto
      */
     registrationDate?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof UserDto
+     */
+    editedTime?: Date;
 }
 
 /**
@@ -80,6 +86,7 @@ export function UserDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): U
         'email': json['email'] == null ? undefined : json['email'],
         'avatarUrl': json['avatarUrl'] == null ? undefined : json['avatarUrl'],
         'registrationDate': json['registrationDate'] == null ? undefined : (new Date(json['registrationDate'])),
+        'editedTime': json['editedTime'] == null ? undefined : (new Date(json['editedTime'])),
     };
 }
 
@@ -100,6 +107,7 @@ export function UserDtoToJSONTyped(value?: UserDto | null, ignoreDiscriminator: 
         'email': value['email'],
         'avatarUrl': value['avatarUrl'],
         'registrationDate': value['registrationDate'] == null ? undefined : ((value['registrationDate']).toISOString()),
+        'editedTime': value['editedTime'] == null ? undefined : ((value['editedTime']).toISOString()),
     };
 }
 

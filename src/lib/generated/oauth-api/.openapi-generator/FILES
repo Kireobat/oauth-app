@@ -3,6 +3,7 @@ apis/BlogControllerApi.ts
 apis/PrivateControllerApi.ts
 apis/PublicControllerApi.ts
 apis/ReactionControllerApi.ts
+apis/TopicControllerApi.ts
 apis/index.ts
 index.ts
 models/BlogDto.ts
@@ -11,9 +12,12 @@ models/CreateBlogDto.ts
 models/CreateReactionDto.ts
 models/CreateReviewDto.ts
 models/OAuthApiPageDtoBlogDto.ts
+models/OAuthApiPageDtoTopicDto.ts
 models/OAuthResponseDto.ts
 models/ReactionDto.ts
 models/ReviewEntity.ts
+models/TopicDto.ts
+models/TopicEntity.ts
 models/UserDto.ts
 models/UserEntity.ts
 models/index.ts

@@ -27,6 +27,13 @@ import {
     ReactionDtoToJSON,
     ReactionDtoToJSONTyped,
 } from './ReactionDto';
+import type { TopicDto } from './TopicDto';
+import {
+    TopicDtoFromJSON,
+    TopicDtoFromJSONTyped,
+    TopicDtoToJSON,
+    TopicDtoToJSONTyped,
+} from './TopicDto';
 
 /**
  * 
@@ -45,7 +52,7 @@ export interface BlogDto {
      * @type {UserDto}
      * @memberof BlogDto
      */
-    user?: UserDto;
+    createdBy?: UserDto;
     /**
      * 
      * @type {string}
@@ -57,7 +64,7 @@ export interface BlogDto {
      * @type {string}
      * @memberof BlogDto
      */
-    body?: string;
+    description?: string;
     /**
      * 
      * @type {Date}
@@ -69,13 +76,19 @@ export interface BlogDto {
      * @type {Date}
      * @memberof BlogDto
      */
-    latestEditTime?: Date;
+    editedTime?: Date;
     /**
      * 
      * @type {Array<ReactionDto>}
      * @memberof BlogDto
      */
     reactions?: Array<ReactionDto>;
+    /**
+     * 
+     * @type {TopicDto}
+     * @memberof BlogDto
+     */
+    topic?: TopicDto;
 }
 
 /**
@@ -96,12 +109,13 @@ export function BlogDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): B
     return {
         
         'id': json['id'] == null ? undefined : json['id'],
-        'user': json['user'] == null ? undefined : UserDtoFromJSON(json['user']),
+        'createdBy': json['createdBy'] == null ? undefined : UserDtoFromJSON(json['createdBy']),
         'title': json['title'] == null ? undefined : json['title'],
-        'body': json['body'] == null ? undefined : json['body'],
+        'description': json['description'] == null ? undefined : json['description'],
         'createdTime': json['createdTime'] == null ? undefined : (new Date(json['createdTime'])),
-        'latestEditTime': json['latestEditTime'] == null ? undefined : (new Date(json['latestEditTime'])),
+        'editedTime': json['editedTime'] == null ? undefined : (new Date(json['editedTime'])),
         'reactions': json['reactions'] == null ? undefined : ((json['reactions'] as Array<any>).map(ReactionDtoFromJSON)),
+        'topic': json['topic'] == null ? undefined : TopicDtoFromJSON(json['topic']),
     };
 }
 
@@ -117,12 +131,13 @@ export function BlogDtoToJSONTyped(value?: BlogDto | null, ignoreDiscriminator: 
     return {
         
         'id': value['id'],
-        'user': UserDtoToJSON(value['user']),
+        'createdBy': UserDtoToJSON(value['createdBy']),
         'title': value['title'],
-        'body': value['body'],
+        'description': value['description'],
         'createdTime': value['createdTime'] == null ? undefined : ((value['createdTime']).toISOString()),
-        'latestEditTime': value['latestEditTime'] == null ? undefined : ((value['latestEditTime']).toISOString()),
+        'editedTime': value['editedTime'] == null ? undefined : ((value['editedTime']).toISOString()),
         'reactions': value['reactions'] == null ? undefined : ((value['reactions'] as Array<any>).map(ReactionDtoToJSON)),
+        'topic': TopicDtoToJSON(value['topic']),
     };
 }
 

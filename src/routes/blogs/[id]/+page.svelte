@@ -8,7 +8,7 @@
     let blogDto: BlogDto = $state(data as BlogDto);
 
     const estimateReadingTime = (): string => {
-        const wordCount = Number(blogDto.body?.split(" ").length);
+        const wordCount = Number(blogDto.description?.split(" ").length);
         if (isNaN(wordCount)) return "0 min";
         const avgWPM = 238;
 
@@ -24,9 +24,9 @@
             >{blogDto.title}</Heading
         >
         <div class="flex justify-evenly mb-4 items-center">
-            <Avatar src={blogDto.user?.avatarUrl} />
+            <Avatar src={blogDto.createdBy?.avatarUrl} />
 
-            <P>{blogDto.user?.username}</P>
+            <P>{blogDto.createdBy?.username}</P>
             <P
                 >{blogDto.createdTime?.toLocaleString("default", {
                     day: "2-digit",
@@ -47,6 +47,6 @@
     </div>
 
     <div>
-        <P>{blogDto.body}</P>
+        <P>{blogDto.description}</P>
     </div>
 </div>

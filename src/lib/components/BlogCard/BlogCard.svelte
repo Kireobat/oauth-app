@@ -19,7 +19,7 @@
     const reactionApi = new ReactionControllerApi();
     const blogApi = new BlogControllerApi();
 
-    const limitedBody = props.blog.body?.substring(0, 50);
+    const limitedBody = props.blog.description?.substring(0, 50);
 
     $effect(() => {
         const updateReactions = async () => {

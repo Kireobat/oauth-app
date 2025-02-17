@@ -5,3 +5,4 @@ export * from './BlogControllerApi';
 export * from './PrivateControllerApi';
 export * from './PublicControllerApi';
 export * from './ReactionControllerApi';
+export * from './TopicControllerApi';

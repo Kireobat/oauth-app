@@ -9,10 +9,17 @@
         MessagesOutline,
         SearchOutline,
     } from "flowbite-svelte-icons";
+    import { onMount } from "svelte";
 
     let openModal: boolean = $state(false);
 
     let { children } = $props();
+
+    let href = $state("");
+
+    onMount(() => {
+        href = window.location.href;
+    });
 </script>
 
 {@render children()}
@@ -27,12 +34,13 @@
         <HomeOutline size="xl" class="dark:text-slate-100" />
         <P size="sm">Home</P>
     </a>
-    <button
+    <a
+        href="/blogs/discover"
         class="order-2 sm:order-2 flex flex-col items-center hover:dark:bg-slate-700 hover:bg-slate-100 px-4 py-2 rounded-md"
     >
         <SearchOutline size="xl" class="dark:text-slate-100" />
         <P size="sm">Search</P>
-    </button>
+    </a>
     <div class="order-3 sm:order-5 flex justify-center">
         <BlogModal bind:open={openModal}>
             <Button on:click={() => (openModal = true)} class="hidden sm:block">
@@ -55,18 +63,19 @@
     </div>
     {#if user.current?.avatarUrl}
         <a
-            href="/u/{user.current.username}"
+            href="/blogs/u/{user.current.username}"
             class="order-5 sm:order-4 flex flex-col items-center hover:dark:bg-slate-700 hover:bg-slate-100 px-4 py-2 rounded-md"
         >
             <Avatar src={user.current.avatarUrl} size="sm" />
             <P size="sm">Profile</P>
         </a>
     {:else}
-        <div
+        <a
+            href="/login?ref={href}"
             class="order-5 sm:order-4 flex flex-col items-center hover:dark:bg-slate-700 hover:bg-slate-100 px-4 py-2 rounded-md"
         >
             <EnvelopeOutline size="xl" class="dark:text-slate-100" />
             <P size="sm">Log in</P>
-        </div>
+        </a>
     {/if}
 </div>

@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { TopicEntity } from './TopicEntity';
+import {
+    TopicEntityFromJSON,
+    TopicEntityFromJSONTyped,
+    TopicEntityToJSON,
+    TopicEntityToJSONTyped,
+} from './TopicEntity';
 import type { UserEntity } from './UserEntity';
 import {
     UserEntityFromJSON,
@@ -38,7 +45,7 @@ export interface BlogEntity {
      * @type {UserEntity}
      * @memberof BlogEntity
      */
-    user?: UserEntity;
+    createdBy?: UserEntity;
     /**
      * 
      * @type {string}
@@ -50,7 +57,7 @@ export interface BlogEntity {
      * @type {string}
      * @memberof BlogEntity
      */
-    body?: string;
+    description?: string;
     /**
      * 
      * @type {Date}
@@ -62,7 +69,13 @@ export interface BlogEntity {
      * @type {Date}
      * @memberof BlogEntity
      */
-    latestEditTime?: Date;
+    editedTime?: Date;
+    /**
+     * 
+     * @type {TopicEntity}
+     * @memberof BlogEntity
+     */
+    topic?: TopicEntity;
 }
 
 /**
@@ -83,11 +96,12 @@ export function BlogEntityFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'id': json['id'] == null ? undefined : json['id'],
-        'user': json['user'] == null ? undefined : UserEntityFromJSON(json['user']),
+        'createdBy': json['createdBy'] == null ? undefined : UserEntityFromJSON(json['createdBy']),
         'title': json['title'] == null ? undefined : json['title'],
-        'body': json['body'] == null ? undefined : json['body'],
+        'description': json['description'] == null ? undefined : json['description'],
         'createdTime': json['createdTime'] == null ? undefined : (new Date(json['createdTime'])),
-        'latestEditTime': json['latestEditTime'] == null ? undefined : (new Date(json['latestEditTime'])),
+        'editedTime': json['editedTime'] == null ? undefined : (new Date(json['editedTime'])),
+        'topic': json['topic'] == null ? undefined : TopicEntityFromJSON(json['topic']),
     };
 }
 
@@ -103,11 +117,12 @@ export function BlogEntityToJSONTyped(value?: BlogEntity | null, ignoreDiscrimin
     return {
         
         'id': value['id'],
-        'user': UserEntityToJSON(value['user']),
+        'createdBy': UserEntityToJSON(value['createdBy']),
         'title': value['title'],
-        'body': value['body'],
+        'description': value['description'],
         'createdTime': value['createdTime'] == null ? undefined : ((value['createdTime']).toISOString()),
-        'latestEditTime': value['latestEditTime'] == null ? undefined : ((value['latestEditTime']).toISOString()),
+        'editedTime': value['editedTime'] == null ? undefined : ((value['editedTime']).toISOString()),
+        'topic': TopicEntityToJSON(value['topic']),
     };
 }
 

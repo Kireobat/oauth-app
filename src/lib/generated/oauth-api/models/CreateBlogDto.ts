@@ -31,6 +31,12 @@ export interface CreateBlogDto {
      * @memberof CreateBlogDto
      */
     description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBlogDto
+     */
+    topicId?: number;
 }
 
 /**
@@ -52,6 +58,7 @@ export function CreateBlogDtoFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'title': json['title'] == null ? undefined : json['title'],
         'description': json['description'] == null ? undefined : json['description'],
+        'topicId': json['topicId'] == null ? undefined : json['topicId'],
     };
 }
 
@@ -68,6 +75,7 @@ export function CreateBlogDtoToJSONTyped(value?: CreateBlogDto | null, ignoreDis
         
         'title': value['title'],
         'description': value['description'],
+        'topicId': value['topicId'],
     };
 }
 

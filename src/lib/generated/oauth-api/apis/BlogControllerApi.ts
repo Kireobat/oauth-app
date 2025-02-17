@@ -46,6 +46,9 @@ export interface GetBlogsRequest {
     page?: number;
     size?: number;
     sort?: Array<string>;
+    topicId?: number;
+    userId?: number;
+    searchQuery?: string;
 }
 
 export interface UpdateBlogByIdRequest {
@@ -151,6 +154,18 @@ export class BlogControllerApi extends runtime.BaseAPI {
 
         if (requestParameters['sort'] != null) {
             queryParameters['sort'] = requestParameters['sort'];
+        }
+
+        if (requestParameters['topicId'] != null) {
+            queryParameters['topicId'] = requestParameters['topicId'];
+        }
+
+        if (requestParameters['userId'] != null) {
+            queryParameters['userId'] = requestParameters['userId'];
+        }
+
+        if (requestParameters['searchQuery'] != null) {
+            queryParameters['searchQuery'] = requestParameters['searchQuery'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
