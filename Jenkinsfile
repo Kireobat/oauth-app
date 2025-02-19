@@ -16,14 +16,6 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    // Build the project
-                    sh 'npm run build'
-                }
-            }
-        }
         stage('Build and Push Docker Image') {
             steps {
                 script {
