@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { requireAuth } from "$lib/requireAuth";
+    import { requireAuth } from "$lib/util/requireAuth";
     import { onMount } from "svelte";
 
     let authenticated = $state(false);
