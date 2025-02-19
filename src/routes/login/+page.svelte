@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { envVariables } from "$lib/util/envVariables";
     import {
         A,
         Button,
@@ -36,15 +37,15 @@
     onMount(() => {
         oAuthProvider = [
             {
-                href: `http://localhost:8080/oauth-api/oauth2/authorization/github?preferredRedirect=${generateState()}`,
+                href: `${envVariables.backendUrl()}/oauth2/authorization/github?preferredRedirect=${generateState()}`,
                 name: "github",
             },
             {
-                href: `http://localhost:8080/oauth-api/oauth2/authorization/google?preferredRedirect=${generateState()}`,
+                href: `${envVariables.backendUrl()}/oauth2/authorization/google?preferredRedirect=${generateState()}`,
                 name: "google",
             },
             {
-                href: `http://localhost:8080/oauth-api/oauth2/authorization/apple?preferredRedirect=${generateState()}`,
+                href: `${envVariables.backendUrl()}/oauth2/authorization/apple?preferredRedirect=${generateState()}`,
                 name: "apple",
             },
         ];
