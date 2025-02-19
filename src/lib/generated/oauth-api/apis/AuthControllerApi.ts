@@ -25,10 +25,6 @@ import {
     UserDtoToJSON,
 } from '../models/index';
 
-export interface GetUserByUsernameRequest {
-    username: string;
-}
-
 /**
  * 
  */
@@ -60,42 +56,6 @@ export class AuthControllerApi extends runtime.BaseAPI {
      */
     async getUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDto> {
         const response = await this.getUserRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async getUserByUsernameRaw(requestParameters: GetUserByUsernameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDto>> {
-        if (requestParameters['username'] == null) {
-            throw new runtime.RequiredError(
-                'username',
-                'Required parameter "username" was null or undefined when calling getUserByUsername().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("github", []);
-        }
-
-        const response = await this.request({
-            path: `/api/v1/user/{username}`.replace(`{${"username"}}`, encodeURIComponent(String(requestParameters['username']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserDtoFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getUserByUsername(requestParameters: GetUserByUsernameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDto> {
-        const response = await this.getUserByUsernameRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

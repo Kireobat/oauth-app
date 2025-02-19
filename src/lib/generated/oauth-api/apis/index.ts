@@ -6,3 +6,4 @@ export * from './PrivateControllerApi';
 export * from './PublicControllerApi';
 export * from './ReactionControllerApi';
 export * from './TopicControllerApi';
+export * from './UserControllerApi';
