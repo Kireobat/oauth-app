@@ -11,8 +11,10 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint .",
-		"openapi:all": "npm run openapi:oauth-api",
-		"openapi:oauth-api": "openapi-generator-cli generate -i  http://localhost:8080/oauth-api/v3/api-docs -g typescript-fetch -o src/lib/generated/oauth-api --additional-properties=supportsES6=true,useSingleRequestParameter=true --skip-validate-spec"
+		"api:all": "npm run api:oauth-api",
+		"api:local": "npm run api:oauth-api:local",
+		"api:oauth-api": "openapi-generator-cli generate -i  https://oauth-api.kireobat.eu/oauth-api/v3/api-docs -g typescript-fetch -o src/lib/generated/oauth-api --additional-properties=supportsES6=true,useSingleRequestParameter=true --skip-validate-spec",
+		"api:oauth-api:local": "openapi-generator-cli generate -i  http://localhost:8080/oauth-api/v3/api-docs -g typescript-fetch -o src/lib/generated/oauth-api --additional-properties=supportsES6=true,useSingleRequestParameter=true --skip-validate-spec"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",

@@ -1,5 +1,5 @@
-import { AuthControllerApi } from "./generated/oauth-api"
-import { user } from "./functions/user.svelte"
+import { AuthControllerApi } from "$lib/generated/oauth-api"
+import { user } from "$lib/functions/user.svelte"
 
 const authApi = new AuthControllerApi()
 

@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "http://localhost:8080/oauth-api".replace(/\/+$/, "");
+export const BASE_PATH = "https://oauth-api.kireobat.eu/oauth-api".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
